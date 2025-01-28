@@ -124,10 +124,10 @@
   function getBotResponse(userInput) {
     const responses = {
       "hello": "and goodbye",
-      "how are you": "today, I feel",
-      "you feel what": "nothing, I am a robot"
-      "Goodbye": "Go away",
-      "default": "Try again suckerrr"
+      "how are you": "today, I'm worried about electrical fires",
+      "what are you doing today": "nothing, I am a robot",
+      "Goodbye": "ok bye",
+      "default": "try again suckerrr"
     };
 
     // Simple keyword-based responses
