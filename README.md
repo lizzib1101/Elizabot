@@ -3,138 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Chatbot</title>
+  <title>D365 find me tool</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .chat-container {
-      width: 400px;
-      max-width: 100%;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-box {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      height: 300px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .user-message, .bot-message {
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    .user-message {
-      background-color: #4CAF50;
-      color: white;
-      align-self: flex-end;
-      max-width: 70%;
-    }
-
-    .bot-message {
-      background-color: #ddd;
-      color: black;
-      align-self: flex-start;
-      max-width: 70%;
-    }
-
-    .input-container {
-      display: flex;
-      padding: 10px;
-      background-color: #fff;
-      border-top: 1px solid #ddd;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-    }
-
-    button {
-      padding: 10px 15px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      background-color: #4CAF50;
-      color: white;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
+    .container {
+    position: fixed;   /* Changed the code from before, is this ok*/
+    bottom: 40%;           /* Vertically center the container - top and bottom work, which is best? */
+    left: 50%;          /* Horizontally center the container - is it always left? */
+    transform: translate(-50%, -50%); /* Adjust the position so the element is centered correctly - chat gpt notes, please explain */
+    padding-bottom: 8px; /* How do I make the responses also be in the middle of the page? When I move it across the page, it deletes the top of the box */
+} /* Why do the links except for my email come up in purple? Is it because I clicked them before I put them in? */
   </style>
+  <title>Mizkan logo</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+        .image-container {
+            position: absolute; /* Help here pls how do I make it move across the screen */
+            top: 0;
+            right: 0;
+            margin: 20px;
+        }
+        img {
+            width: 400px; 
+            height: auto;
+        }
+    </style>
 </head>
 <body>
+<div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Mizkan_company_logo.svg/2560px-Mizkan_company_logo.svg.png" alt="Top Right Image">
+    </div>
+  <div id="responseContainer"></div>
 
-<div class="chat-container">
-  <div class="chat-box" id="chat-box">
-    <!-- Chat messages will appear here -->
+  <div class="container">
+    <select id="responseDropdown" onchange="addResponse()">
+      <option value="default">Select an option</option>
+      <option value="response1">Send me the vendor setup form link</option>
+      <option value="response2">Send me the employee setup form link</option>
+      <option value="response3">How do I set up a vendor on D365/the MDM</option>
+      <option value="response4">Link to D365 instructions hub</option>
+      <option value="response5">Other query</option>
+    </select>
   </div>
-  <div class="input-container">
-    <input type="text" id="user-input" placeholder="Type a message..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
 
-<script>
-  function sendMessage() {
-    let userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return;
-
-    // Display the user's message
-    displayMessage(userInput, "user");
-
-    // Get the bot's response
-    let botResponse = getBotResponse(userInput);
-    
-    // Display the bot's message
-    setTimeout(() => displayMessage(botResponse, "bot"), 1000);
-
-    // Clear the input field
-    document.getElementById("user-input").value = "";
-  }
-
-  function displayMessage(message, sender) {
-    let messageElement = document.createElement("div");
-    messageElement.classList.add(sender === "user" ? "user-message" : "bot-message");
-    messageElement.textContent = message;
-
-    document.getElementById("chat-box").appendChild(messageElement);
-    document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-  }
-
-  function getBotResponse(userInput) {
-    const responses = {
-      "hello": "and goodbye",
-      "how are you": "today, I'm worried about electrical fires",
-      "what are you doing today": "nothing, I am a robot",
-      "Goodbye": "ok bye",
-      "default": "try again suckerrr"
-    };
-
-    // Simple keyword-based responses
-    userInput = userInput.toLowerCase().trim();
-    return responses[userInput] || responses["default"];
-  }
-</script>
+  <script>
+    function addResponse() {
+      const dropdown = document.getElementById('responseDropdown');
+      const responseContainer = document.getElementById('responseContainer');
+      const value = dropdown.value;
+      
+      const responseHtmls = {
+      	'response1': '<a href="https://forms.office.com/pages/responsepage.aspx?id=WhJYo0IRlkqc7MuWtRgoD3sct079UOpDqYUufHcxtMVURjAwOEZJRU05Nk5aTlZDWEgzNEg5TDlWRyQlQCN0PWcu&route=shorturl!" target="_blank">Vendor form link</a/>',
+      	'response2': '<a href="https://nakanofoods.sharepoint.com/:w:/r/sites/Nemo-Proc-SC-Workspace-Procurement/_layouts/15/Doc.aspx?sourcedoc=%7BC9BFE466-DABD-4445-B237-201A701E8534%7D&file=D365%20Employee%20Set%20Up%20Form.doc&action=default&mobileredirect=true" target="_blank">Employee bank details form</a>',
+      	'response3': '<a href="https://nakanofoods.sharepoint.com/:w:/r/sites/Nemo-Proc-SC-Workspace-Procurement/_layouts/15/Doc.aspx?sourcedoc=%7B8C75ED4E-F7BF-4257-8056-C8C4E19B2E43%7D&file=MDM%20Vendor%20Set%20Up%20Process%20-%20For%20Employees.docx&action=default&mobileredirect=true" target="_blank">Vendor Setup Instructions for D365 and the MDM</a>',
+      	'response4': '<a href="https://nakanofoods.sharepoint.com/sites/D365Hub" target="_blank">Employee bank details form</a>',
+      	'response5': '<a href="mailto:lizzi.burford@mizkan.co.uk" target="_blank">Email Lizzi</a>',
+      }
+      
+      const htmlElementToDisplay = responseHtmls[value];
+      if (htmlElementToDisplay !== undefined) {
+        var responseBubble = document.createElement('div');
+        responseBubble.innerHTML = htmlElementToDisplay;
+        responseContainer.appendChild(responseBubble);
+      }
+    }
+  </script>
 
 </body>
 </html>
